@@ -3,6 +3,9 @@ import { useAuth } from './context/AuthContext'
 import LoadingSpinner from './components/LoadingSpinner'
 
 import Landing from './pages/Landing'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+
 import Dashboard from './pages/Dashboard'
 import CreateTrip from './pages/CreateTrip'
 import TripDetails from './pages/TripDetails'
@@ -29,6 +32,8 @@ export default function App() {
 
   return (
     <Routes>
+
+      {/* Login / Signup */}
       <Route
         path="/"
         element={
@@ -40,11 +45,25 @@ export default function App() {
         }
       />
 
+      {/* Forgot Password */}
+      <Route
+        path="/forgot-password"
+        element={<ForgotPassword />}
+      />
+
+      {/* Reset Password */}
+      <Route
+        path="/reset-password"
+        element={<ResetPassword />}
+      />
+
+      {/* Join Trip */}
       <Route
         path="/join/:inviteCode"
         element={<JoinTrip />}
       />
 
+      {/* Dashboard */}
       <Route
         path="/dashboard"
         element={
@@ -54,6 +73,7 @@ export default function App() {
         }
       />
 
+      {/* Create Trip */}
       <Route
         path="/trips/new"
         element={
@@ -63,6 +83,7 @@ export default function App() {
         }
       />
 
+      {/* Trip Details */}
       <Route
         path="/trips/:tripId"
         element={
@@ -72,6 +93,7 @@ export default function App() {
         }
       />
 
+      {/* Add Expense */}
       <Route
         path="/trips/:tripId/expenses/new"
         element={
@@ -81,6 +103,7 @@ export default function App() {
         }
       />
 
+      {/* Expense Details */}
       <Route
         path="/trips/:tripId/expenses/:expenseId"
         element={
@@ -90,6 +113,7 @@ export default function App() {
         }
       />
 
+      {/* Edit Expense */}
       <Route
         path="/trips/:tripId/expenses/:expenseId/edit"
         element={
@@ -99,6 +123,7 @@ export default function App() {
         }
       />
 
+      {/* Insights */}
       <Route
         path="/trips/:tripId/insights"
         element={
@@ -108,6 +133,7 @@ export default function App() {
         }
       />
 
+      {/* Settlement */}
       <Route
         path="/trips/:tripId/settlement"
         element={
@@ -117,6 +143,7 @@ export default function App() {
         }
       />
 
+      {/* Settings */}
       <Route
         path="/settings"
         element={
@@ -126,10 +153,12 @@ export default function App() {
         }
       />
 
+      {/* Unknown URL */}
       <Route
         path="*"
         element={<Navigate to="/" replace />}
       />
+
     </Routes>
   )
 }
