@@ -8,7 +8,11 @@ import { useAuth } from '../context/AuthContext'
 export default function JoinTrip() {
   const { inviteCode } = useParams()
   const navigate = useNavigate()
-  const { user, loading: authLoading } = useAuth()
+
+  const {
+    user,
+    loading: authLoading
+  } = useAuth()
 
   const [trip, setTrip] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -36,6 +40,7 @@ export default function JoinTrip() {
           name: data[0].trip_name
         })
       } catch (err) {
+        console.error('Invitation error:', err)
         setError('This invitation link is invalid or expired.')
       } finally {
         setLoading(false)
@@ -57,6 +62,13 @@ export default function JoinTrip() {
     setError('')
 
     try {
+      // The Supabase function now:
+      // 1. Validates the invitation
+      // 2. Gets the user's real name
+      // 3. Adds the user to trip_members
+      // 4. Saves the correct user_id
+      // 5. Saves the correct member_name
+
       const { data, error } = await supabase.rpc(
         'join_trip_by_invite',
         {
@@ -66,9 +78,14 @@ export default function JoinTrip() {
 
       if (error) throw error
 
+      // Open the joined trip
       navigate(`/trips/${data}`)
     } catch (err) {
-      setError(err.message || 'Could not join this trip.')
+      console.error('Join trip error:', err)
+
+      setError(
+        err.message || 'Could not join this trip.'
+      )
     } finally {
       setJoining(false)
     }
